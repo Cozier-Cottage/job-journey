@@ -1,4 +1,4 @@
-CREATE DATABASE jobJourneyDB;
+CREATE DATABASE job_journey_db;
 USE jobJourneyDB;
 
 CREATE TABLE users (
