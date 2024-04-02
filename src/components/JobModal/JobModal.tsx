@@ -5,14 +5,28 @@ import { useForm } from "@mantine/form";
 
 export const JobModal: React.FC = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  // const [submittedValues, setSubmittedValues] = useState('');
   const form = useForm({
     initialValues: {
-      email: "",
-      termsOfService: false,
+      jobTitle: "",
+      companyName: "",
+      location: "",
+      appStatus: "",
+      jobType: "",
+      appDate: "",
+      method: "",
+      description: "",
+      url: "",
+      jobSalary: "",
+      companyContact: "",
+      interviewDate: "",
+      interviewNotes: "",
+      followUp: "",
+      addtionalNotes: "",
     },
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-    },
+    // validate: {
+    //   companyContact: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+    // },
   });
 
   return (
@@ -26,80 +40,117 @@ export const JobModal: React.FC = () => {
             placeholder="your@email.com"
             {...form.getInputProps("email")}
           /> */}
-          {/* Search with auto-complete? */}
+          {/* JOB TITLE */}
           <TextInput
             withAsterisk
+            required={true}
             label="Job Title"
             placeholder="e.g. Backend Software Developer, Fullstack Engineer..."
+            {...form.getInputProps("jobTitle")}
           />
-          {/* Search with auto-complete? */}
+          {/* COMPANY NAME */}
           <TextInput
             withAsterisk
+            required={true}
             label="Company Name"
             placeholder="Apple, Amazon, Codesmith..."
+            {...form.getInputProps("companyName")}
           />
-          {/* Search with auto-complete? */}
+          {/* LOCATION */}
           <TextInput
             withAsterisk
+            required={true}
             label="Job Location"
             placeholder="e.g. remote, San Francisco, New York..."
+            {...form.getInputProps("location")}
           />
-          {/* Make this a calendar? */}
+          {/* APP STATUS */}
           <TextInput
             withAsterisk
-            label="Application Date"
-            placeholder="MM/DD/YYYY"
-          />
-          {/* Make this a dropdown of choices? */}
-          <TextInput
-            withAsterisk
+            required={true}
             label="Application Status"
             placeholder="e.g. No response, Technical interview scheduled..."
+            {...form.getInputProps("appStatus")}
           />
+          {/* JOB TYPE */}
           <TextInput
+            withAsterisk
+            required={true}
+            label="Job Type"
+            placeholder="e.g. Onsite, Remote, Hybrid..."
+            {...form.getInputProps("jobType")}
+          />
+          {/* APP DATE */}
+          <TextInput
+            withAsterisk
+            required={true}
+            label="Application Date"
+            placeholder="MM/DD/YYYY"
+            {...form.getInputProps("appDate")}
+          />
+          {/* METHOD */}
+          <TextInput
+            required={false}
             label="Method"
             placeholder="e.g. online, email, company website..."
+            {...form.getInputProps("method")}
           />
-          {/* Give two options to either paste link or put in description */}
+          {/* DESCRIPTION */}
           <TextInput
+            required={false}
             label="Job Description"
             placeholder="TO BE REPLACED"
+            {...form.getInputProps("description")}
           />
-          {/* Redundant? Combine with previous? Can also add form.getInputProps to check if valid link */}
+          {/* URL */}
           <TextInput
+            required={false}
             label="Job URL"
             placeholder="URL link to job listing"
+            {...form.getInputProps("url")}
           />
-          {/* Make into a dropdown? */}
+          {/* SALARY */}
           <TextInput
+            required={false}
             label="Job Salary"
             placeholder="e.g. undisclosed, amount in dollars..."
+            {...form.getInputProps("jobSalary")}
           />
-          {/* What do we want this to be? */}
+          {/* COMPANY CONTACT */}
           <TextInput
+            required={false}
             label="Company Contact"
             placeholder="contact@email.com"
+            {...form.getInputProps("companyContact")}
           />
-          {/* Can potentially hold all relevant dates here. Calendar instead of text? */}
+          {/* INTERVIEW DATE */}
           <TextInput
+            required={false}
             label="Interview Date"
             placeholder="MM/DD/YYYY"
+            {...form.getInputProps("interviewDate")}
           />
-          {/* Can potentially select from the Interview Dates and add notes for each? */}
+          {/* INTERVIEW NOTES */}
           <TextInput
+            required={false}
             label="Interview Notes"
             placeholder="e.g. algo interview, brush up on binary search and sorting"
+            {...form.getInputProps("interviewNotes")}
           />
-          {/* What do we want this to be? */}
+          {/* FOLLOW UP */}
           <TextInput
+            required={false}
             label="Follow-Up Actions"
             placeholder="e.g. Thank you email sent..."
+            {...form.getInputProps("followUp")}
           />
+          {/* ADDITIONAL NOTES */}
           <TextInput
+            required={false}
             label="Additional Notes"
             placeholder="e.g. quick response time, tech stack..."
+            {...form.getInputProps("addtionalNotes")}
           />
-
 
           {/* <Checkbox
             mt="md"
@@ -108,12 +159,19 @@ export const JobModal: React.FC = () => {
               type: "checkbox",
             })}
           /> */}
-          <Group justify="flex-end" mt="md">
-            <Button type="submit">Submit</Button>
-          </Group>
+          {/* <Group justify="flex-end" mt="md"> */}
+          <Button type="submit">Submit</Button>
+          {/* </Group> */}
         </form>
       </Modal>
-      <Button onClick={open}>CLICKMEEEE</Button>
+      <Button
+        onClick={() => {
+          form.reset();
+          open();
+        }}
+      >
+        CLICKMEEEE
+      </Button>
     </div>
   );
 };
