@@ -1,0 +1,19 @@
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+}
+
+.logoDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  h1 {
+    font-size: 3.5vh;
+  }
+}
+
+.logo {
+  margin: 10px;
+}
