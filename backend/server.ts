@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { ServerError } from './backend-types';
+import mysql from 'mysql';
 
 const PORT = 3000;
 const app = express();
@@ -10,6 +11,23 @@ app.use(bodyParser.json({ limit: '50mb' })); // set file size limit to 50mb
 app.use(cookieParser());
 app.use(express.json({ limit: '50mb' })); // set file size limit to 50mb
 app.use(express.urlencoded({ extended: true, limit: '50mb' })); // set file size limit to 50mb
+
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: 'localhost',
+  user: 'your_mysql_username',
+  password: 'your_mysql_password',
+  database: 'your_database_name'
+});
+
+
+// app.get('/users', (req, res) => {
+//   pool.query('SELECT * FROM users', (error, results, fields) => {
+//       if (error) throw error;
+//       res.json(results);
+//   });
+// });
+
 
 
 // Handling requests to unknown endpoints...

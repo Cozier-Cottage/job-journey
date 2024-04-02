@@ -1,19 +1,18 @@
-.navBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
+.jobSection {
+    margin-left: 50px;
 }
 
-.logoDiv {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  h1 {
-    font-size: 3.5vh;
-  }
+.grid {
+    position: relative;
+    height: 100%;
 }
-
-.logo {
-  margin: 10px;
+  
+.grid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 25%; /* Adjust this value based on your column width */
+    width: 1px;
+    background-color: #ccc; /* Adjust the color as needed */
 }
