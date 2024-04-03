@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Home.module.scss";
-import { Blockquote, Button, GridCol, Grid, Stack, Table } from "@mantine/core";
+import { Blockquote, Button, GridCol, Grid, Stack } from "@mantine/core";
 import { JobModal } from "../JobModal/JobModal";
 import { JobTable } from "../JobTable/JobTable";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { TableContent } from '../../ui-types.d.ts';
+import { IconOctagonPlus } from "@tabler/icons-react";
+import { SelectDropdownSearch } from './SelectDropdownSearch';
+
+import dummyData from './dummyDatabase.tsx'
 
 const Home = (): JSX.Element => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [search, setSearch] = useState<string>('');
   const form = useForm({
     initialValues: {
       jobTitle: "",
@@ -30,6 +36,8 @@ const Home = (): JSX.Element => {
     //   companyContact: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     // },
   });
+  const [elements, setElements] = useState<TableContent[]>(dummyData);
+
   return (
     <Grid className={styles.grid}>
       {/* Grid and GridCol with certain span allows us to separate left column from main column */}
@@ -47,18 +55,23 @@ const Home = (): JSX.Element => {
       </GridCol>
       <GridCol span={9}>
         <div className={styles.jobSection}>
-        <JobModal open={open} close={close} form={form} opened={opened}/>
-          <Button
-            onClick={() => {
-              form.reset();
-              open();
-            }}
-          >
-          CLICKMEEEE
-          </Button>
+        <JobModal open={open} close={close} form={form} opened={opened} elements={elements} setElements={setElements}/>
+          {/* PLUS BUTTON */}
+          <div className={styles.plusContainer}>
+            <SelectDropdownSearch searchArray={elements.map(el => el.companyName)} search={search} setSearch={setSearch} firstVal={elements[0].companyName}/>
+            <Button variant="transparent" c="gray"
+              onClick={() => {
+                form.reset();
+                open();
+              }}
+              // style={{ marginTop: '25px'}}
+            >
+              <IconOctagonPlus />
+            </Button>
+          </div>
           
           {/* TABLE */}
-          <JobTable />
+          <JobTable elements={elements} setElements={setElements} search={search}/>
         </div>
       </GridCol>
     </Grid>

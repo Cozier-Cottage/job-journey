@@ -1,9 +1,10 @@
-.navbar {
+.navbar, .navbarLight {
     position: fixed;
     top: 0;
     left: 0;
+    height: 50px;
     width: 100%;
-    background-color: #2a3e5d;
+    background-color: #313030;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 9999;
@@ -12,6 +13,15 @@
     align-items: center;
     // max-width: 1200px;
     padding-right: 10px;
+  }
+
+.navbarLight {
+  background-color: #E2DFD2;
+}
+
+  .contentWrapper {
+    margin-top: 50px;
+    padding: 20px;
   }
   
   .logoContainer {
@@ -32,10 +42,14 @@
     margin-right: 10px;
   }
   
-  .logoText {
+  .logoText, .logoTextLight {
     font-size: 20px;
     font-weight: bold;
     color: white;
+  }
+
+  .logoTextLight {
+    color: black;
   }
   
   .navLinkContainer {
@@ -43,11 +57,15 @@
     margin-left: auto;
   }
   
-  .navLink {
+  .navLink, .active {
     margin-left: 20px;
     text-decoration: none;
     color: #fffcfc;
     font-weight: bold;
+  }
+
+  .active {
+    border-bottom: 2px solid #927bad;
   }
   
   .burger {

@@ -1,24 +1,37 @@
 import React, { useState } from "react";
-import { Modal, TextInput, Checkbox, Button, Group, Select } from "@mantine/core";
+import { Modal, TextInput, Button, Group, Select } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
+import { TableContent } from '../../ui-types.d.ts';
 
 interface JobModalProps {
   open: () => void;
   close: () => void; 
   form: any;
   opened: boolean;
+  elements: TableContent[]; 
+  setElements: () => void;
 }
 
-export const JobModal: React.FC = ({ open, close, form, opened }: JobModalProps) => {
+export const JobModal: React.FC = ({ open, close, form, opened, elements, setElements }: JobModalProps) => {
   const [date, setDate] = useState<Date | null>(null);
+  
+  const handleSubmit = (values: TableContent) => {
+    const newElements: TableContent[] = [...elements];
+    console.log("NEW ELEMENT BEFORE ", newElements);
+    newElements.push(values);
+    console.log("NEW ELEMENT AFTER ", newElements);
+    setElements(newElements);
+  }
+
   return (
     <div>
       <Modal opened={opened} onClose={close}>
         <form onSubmit={form.onSubmit((values) => {
           console.log(values);
+          handleSubmit(values);
           close();
         })}>
           {/* Good example. See 'getInputProps'; Can validate input, etc.
@@ -58,6 +71,7 @@ export const JobModal: React.FC = ({ open, close, form, opened }: JobModalProps)
             required={true}
             label="Application Status"
             placeholder="e.g. No response, Technical interview scheduled..."
+            defaultValue="Pending"
             data={[
               "Pending",
               "Phone screen scheduled",
@@ -72,8 +86,10 @@ export const JobModal: React.FC = ({ open, close, form, opened }: JobModalProps)
             withAsterisk
             required={true}
             label="Job Type"
+            defaultValue="Unknown"
             placeholder="e.g. Onsite, Remote, Hybrid"
             data={[
+              "Unknown",
               "Onsite",
               "Remote",
               "Hybrid",

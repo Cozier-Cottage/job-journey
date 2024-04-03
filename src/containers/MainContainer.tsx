@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./MainContainer.module.scss";
 import { Outlet, NavLink } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
-import { Button, Burger } from "@mantine/core";
+import { Button, Burger, Text } from "@mantine/core";
 import { useMantineColorScheme } from "@mantine/core";
 import Logo from "../assets/Logo.jpg";
 
@@ -11,41 +11,60 @@ const MainContainer = (): JSX.Element => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   return (
     <div>
-      <nav className={styles.navbar}>
+      <nav className={colorScheme === 'dark' ? styles.navbar : styles.navbarLight}>
         <div className={styles.logoContainer}>
           <NavLink to="/" className={styles.logoLink}>
             <img src={Logo} alt="Logo" className={styles.logo} />
-            <span className={styles.logoText}>Job Journey</span>
+            <span className={styles.logoText}>
+              <Text fs="italic" fw={700} size="lg" c={colorScheme === 'dark' ? 'white' : 'black'}>Job Journey</Text>
+            </span>
           </NavLink>
         </div>
         <div className={styles.navLinkContainer}>
           <Button
-              variant="outline"
-              color={colorScheme === 'dark' ? "indigo" : 'white'}
-              onClick={() => toggleColorScheme()}
-              size="xs"
-            >
-              {colorScheme}
+            variant="outline"
+            color={colorScheme === "dark" ? "indigo" : "#b08e17"}
+            onClick={() => toggleColorScheme()}
+            size="xs"
+          >
+            {colorScheme}
           </Button>
-          <NavLink to="/application" className={styles.navLink}>
-            Application History
+          <NavLink
+            to="/application"
+            className={({ isActive }) =>
+              isActive ? styles.active : styles.navLink
+            }
+          >
+            <Text size="md" c={colorScheme === 'dark' ? 'white' : 'black'}>Application History</Text>
           </NavLink>
-          <NavLink to="/resume" className={styles.navLink}>
-            Resume
+          <NavLink
+            to="/resume"
+            className={({ isActive }) =>
+              isActive ? styles.active : styles.navLink
+            }
+          >
+            <Text size="md" c={colorScheme === 'dark' ? 'white' : 'black'}>Resume</Text>
           </NavLink>
-          <NavLink to="/profile" className={styles.navLink}>
-            Profile
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive ? styles.active : styles.navLink
+            }
+          >
+            <Text size="md" c={colorScheme === 'dark' ? 'white' : 'black'}>Profile</Text>
           </NavLink>
         </div>
         <Burger
           className={styles.burger}
-          color="red"
+          color={colorScheme === 'dark' ? 'white' : 'black'}
           opened={opened}
           onClick={toggle}
           aria-label="Toggle navigation"
         />
       </nav>
-      <Outlet />
+      <div className={styles.contentWrapper}>
+        <Outlet />
+      </div>
     </div>
   );
 };
