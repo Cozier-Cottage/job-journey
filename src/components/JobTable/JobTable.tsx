@@ -48,7 +48,7 @@ export const JobTable = ({
         return colorScheme === "dark" ? "#cf9fff" : "violet";
       case "Ghosted":
         return "red";
-      case "Offer made":
+      case "Offer received":
         return colorScheme === "dark" ? "green" : "#17b061";
       default:
         return "gray";
@@ -95,7 +95,7 @@ export const JobTable = ({
                 "Phone screen scheduled",
                 "Technical interview scheduled",
                 "Ghosted",
-                "Offer made",
+                "Offer received",
               ]}
               allowDeselect={false}
             />

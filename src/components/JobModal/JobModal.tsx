@@ -91,7 +91,7 @@ export const JobModal = ({ close, form, opened, elements, setElements, objectEle
               "Phone screen scheduled",
               "Technical interview scheduled",
               "Ghosted",
-              "Offer made"
+              "Offer received"
             ]}
             allowDeselect={false}
             {...form.getInputProps("appStatus")}
