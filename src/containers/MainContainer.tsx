@@ -16,7 +16,7 @@ const MainContainer = (): JSX.Element => {
           <NavLink to="/" className={styles.logoLink}>
             <img src={Logo} alt="Logo" className={styles.logo} />
             <span className={styles.logoText}>
-              <Text fs="italic" fw={700} size="lg" c={colorScheme === 'dark' ? 'white' : 'black'}>Job Journey</Text>
+              <Text fs="italic" size="lg" c={colorScheme === 'dark' ? 'white' : 'black'}>Job Journey</Text>
             </span>
           </NavLink>
         </div>

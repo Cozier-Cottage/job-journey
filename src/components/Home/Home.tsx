@@ -55,7 +55,7 @@ const Home = (): JSX.Element => {
       </GridCol>
       <GridCol span={9}>
         <div className={styles.jobSection}>
-        <JobModal open={open} close={close} form={form} opened={opened} elements={elements} setElements={setElements}/>
+          <JobModal close={close} form={form} opened={opened} elements={elements} setElements={setElements}/>
           {/* PLUS BUTTON */}
           <div className={styles.plusContainer}>
             <SelectDropdownSearch searchArray={elements.map(el => el.companyName)} search={search} setSearch={setSearch} firstVal={elements[0].companyName}/>
@@ -71,7 +71,7 @@ const Home = (): JSX.Element => {
           </div>
           
           {/* TABLE */}
-          <JobTable elements={elements} setElements={setElements} search={search}/>
+          <JobTable open={open} close={close} form={form} opened={opened} elements={elements} setElements={setElements} search={search} />
         </div>
       </GridCol>
     </Grid>

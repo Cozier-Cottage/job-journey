@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, TextInput, Button, Group, Select } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { useForm } from "@mantine/form";
 import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 import { TableContent } from '../../ui-types.d.ts';
 
 interface JobModalProps {
-  open: () => void;
   close: () => void; 
   form: any;
   opened: boolean;
   elements: TableContent[]; 
-  setElements: () => void;
+  setElements: (argo0:any) => void;
+  element?: TableContent;
 }
 
-export const JobModal: React.FC = ({ open, close, form, opened, elements, setElements }: JobModalProps) => {
+export const JobModal = ({ close, form, opened, elements, setElements, element }: JobModalProps): JSX.Element => {
   const [date, setDate] = useState<Date | null>(null);
   
   const handleSubmit = (values: TableContent) => {
@@ -26,10 +24,16 @@ export const JobModal: React.FC = ({ open, close, form, opened, elements, setEle
     setElements(newElements);
   }
 
+  useEffect(() => {
+    if (element) {
+      form.setValues(element);
+    }
+  }, [element, form]);
+
   return (
     <div>
       <Modal opened={opened} onClose={close}>
-        <form onSubmit={form.onSubmit((values) => {
+        <form onSubmit={form.onSubmit((values: TableContent) => {
           console.log(values);
           handleSubmit(values);
           close();
@@ -46,6 +50,7 @@ export const JobModal: React.FC = ({ open, close, form, opened, elements, setEle
             withAsterisk
             required={true}
             label="Job Title"
+            value='testing'
             placeholder="e.g. Backend Software Developer, Fullstack Engineer..."
             {...form.getInputProps("jobTitle")}
           />
@@ -77,6 +82,7 @@ export const JobModal: React.FC = ({ open, close, form, opened, elements, setEle
               "Phone screen scheduled",
               "Technical interview scheduled",
               "Ghosted",
+              "Offer made"
             ]}
             allowDeselect={false}
             {...form.getInputProps("appStatus")}

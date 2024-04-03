@@ -10,14 +10,22 @@ import {
 } from "@mantine/core";
 import { IconPencil, IconDots } from "@tabler/icons-react";
 import { TableContent } from "../../ui-types.d.ts";
+import { JobModal } from "../JobModal/JobModal.tsx";
 
 interface JobTableProps {
+  open: () => void;
+  close: () => void; 
+  form: any;
+  opened: boolean;
   elements: TableContent[];
-  setElements: () => void;
+  setElements: (argo0:any) => void;
   search: string;
 }
 
 export const JobTable = ({
+  open,
+  close,
+  form,
   elements,
   setElements,
   search,
@@ -35,9 +43,11 @@ export const JobTable = ({
       case "Phone screen scheduled":
         return "blue";
       case "Technical interview scheduled":
-        return colorScheme === "dark" ? "green" : "#17b061";
+        return colorScheme === "dark" ? "#cf9fff" : "violet";
       case "Ghosted":
         return "red";
+      case "Offer made":
+        return colorScheme === "dark" ? "green" : "#17b061";
       default:
         return "gray";
     }
@@ -63,9 +73,15 @@ export const JobTable = ({
         );
     const newRows = newElements.map((element, i) => (
       <Table.Tr key={i} style={{ cursor: "pointer" }}>
-        <Table.Td><Text size="lg">{element.jobTitle}</Text></Table.Td>
-        <Table.Td><Text size="lg">{element.companyName}</Text></Table.Td>
-        <Table.Td><Text size='lg'>{element.location}</Text></Table.Td>
+        <Table.Td>
+          <Text size="lg">{element.jobTitle}</Text>
+        </Table.Td>
+        <Table.Td>
+          <Text size="lg">{element.companyName}</Text>
+        </Table.Td>
+        <Table.Td>
+          <Text size="lg">{element.location}</Text>
+        </Table.Td>
         <Table.Td>
           {editingIndex === i ? (
             <Select
@@ -77,6 +93,7 @@ export const JobTable = ({
                 "Phone screen scheduled",
                 "Technical interview scheduled",
                 "Ghosted",
+                "Offer made",
               ]}
               allowDeselect={false}
             />
@@ -87,10 +104,12 @@ export const JobTable = ({
           )}
         </Table.Td>
         {/* PENCIL EDIT BUTTON */}
-        <Table.Td style={{
-          width: "10%",
-          padding: 0,
-        }}>
+        <Table.Td
+          style={{
+            width: "10%",
+            padding: 0,
+          }}
+        >
           {/* Fix icon size to change dynamically with window */}
           <Tooltip label="Update Status" color="gray">
             <Button
@@ -114,14 +133,29 @@ export const JobTable = ({
             radius={20}
             opened={openedModals[i]}
             onClose={() =>
-              setOpenedModals((prevState) => {
-                const newState = [...prevState];
-                newState[i] = false;
-                return newState;
-              })
+              setOpenedModals(new Array(elements.length).fill(false))
             }
             size="50rem"
-            title="Additional Info"
+            title={
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Text size="xl" style={{ flexGrow: 1 }}>
+                  Additional Info
+                </Text>
+                <Tooltip label="Update Details" color="gray">
+                  <Button
+                    variant="transparent"
+                    c="gray"
+                    onClick={() => {
+                      // Open editing and close current modal
+                      setOpenedModals(new Array(elements.length).fill(false));
+                      open();
+                    }}
+                  >
+                    <IconPencil />
+                  </Button>
+                </Tooltip>
+              </div>
+            }
           >
             {Object.keys(element).map((prop, i) => {
               console.log(`ELement: ${JSON.stringify(element)}`);
@@ -161,7 +195,14 @@ export const JobTable = ({
       </Table.Tr>
     ));
     setRows(newRows);
-  }, [search, elements, editingIndex, colorScheme, openedModals]);
+  }, [
+    search,
+    elements,
+    editingIndex,
+    colorScheme,
+    openedModals,
+    // getStatusColor,
+  ]);
 
   return (
     <Table striped>
@@ -173,10 +214,18 @@ export const JobTable = ({
               : { color: "#927bad" }
           }
         >
-          <Table.Th><Text size="lg">Job Title</Text></Table.Th>
-          <Table.Th><Text size="lg">Company Name</Text></Table.Th>
-          <Table.Th><Text size="lg">Location</Text></Table.Th>
-          <Table.Th><Text size="lg">Status</Text></Table.Th>
+          <Table.Th>
+            <Text size="lg">Job Title</Text>
+          </Table.Th>
+          <Table.Th>
+            <Text size="lg">Company Name</Text>
+          </Table.Th>
+          <Table.Th>
+            <Text size="lg">Location</Text>
+          </Table.Th>
+          <Table.Th>
+            <Text size="lg">Status</Text>
+          </Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>
