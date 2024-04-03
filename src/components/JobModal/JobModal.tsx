@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, TextInput, Checkbox, Button, Group } from "@mantine/core";
+import { Modal, TextInput, Button, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 

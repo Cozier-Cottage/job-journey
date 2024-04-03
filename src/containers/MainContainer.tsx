@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./MainContainer.module.scss";
 import { Outlet } from "react-router-dom";
 import {
