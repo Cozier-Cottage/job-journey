@@ -1,38 +1,26 @@
-import React from "react";
-import { Modal, TextInput, Checkbox, Button, Group } from "@mantine/core";
+import React, { useState } from "react";
+import { Modal, TextInput, Checkbox, Button, Group, Select } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { DateInput } from '@mantine/dates';
+import '@mantine/dates/styles.css';
 
-export const JobModal: React.FC = () => {
-  const [opened, { open, close }] = useDisclosure(false);
-  // const [submittedValues, setSubmittedValues] = useState('');
-  const form = useForm({
-    initialValues: {
-      jobTitle: "",
-      companyName: "",
-      location: "",
-      appStatus: "",
-      jobType: "",
-      appDate: "",
-      method: "",
-      description: "",
-      url: "",
-      jobSalary: "",
-      companyContact: "",
-      interviewDate: "",
-      interviewNotes: "",
-      followUp: "",
-      addtionalNotes: "",
-    },
-    // validate: {
-    //   companyContact: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-    // },
-  });
+interface JobModalProps {
+  open: () => void;
+  close: () => void; 
+  form: any;
+  opened: boolean;
+}
 
+export const JobModal: React.FC = ({ open, close, form, opened }: JobModalProps) => {
+  const [date, setDate] = useState<Date | null>(null);
   return (
     <div>
       <Modal opened={opened} onClose={close}>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => {
+          console.log(values);
+          close();
+        })}>
           {/* Good example. See 'getInputProps'; Can validate input, etc.
           <TextInput
             withAsterisk
@@ -65,27 +53,43 @@ export const JobModal: React.FC = () => {
             {...form.getInputProps("location")}
           />
           {/* APP STATUS */}
-          <TextInput
+          <Select
             withAsterisk
             required={true}
             label="Application Status"
             placeholder="e.g. No response, Technical interview scheduled..."
+            data={[
+              "Pending",
+              "Phone screen scheduled",
+              "Technical interview scheduled",
+              "Ghosted",
+            ]}
+            allowDeselect={false}
             {...form.getInputProps("appStatus")}
           />
           {/* JOB TYPE */}
-          <TextInput
+          <Select
             withAsterisk
             required={true}
             label="Job Type"
-            placeholder="e.g. Onsite, Remote, Hybrid..."
+            placeholder="e.g. Onsite, Remote, Hybrid"
+            data={[
+              "Onsite",
+              "Remote",
+              "Hybrid",
+            ]}
+            allowDeselect={false}
             {...form.getInputProps("jobType")}
           />
           {/* APP DATE */}
-          <TextInput
+          <DateInput   
             withAsterisk
             required={true}
-            label="Application Date"
-            placeholder="MM/DD/YYYY"
+            clearable
+            label="Pick date"
+            placeholder="Pick date"
+            value={date}
+            onChange={setDate} 
             {...form.getInputProps("appDate")}
           />
           {/* METHOD */}
@@ -159,19 +163,11 @@ export const JobModal: React.FC = () => {
               type: "checkbox",
             })}
           /> */}
-          {/* <Group justify="flex-end" mt="md"> */}
+          <Group justify="center" mt="md">
           <Button type="submit">Submit</Button>
-          {/* </Group> */}
+          </Group>
         </form>
       </Modal>
-      <Button
-        onClick={() => {
-          form.reset();
-          open();
-        }}
-      >
-        CLICKMEEEE
-      </Button>
     </div>
   );
 };
