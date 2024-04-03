@@ -2,10 +2,12 @@
   "name": "job-journey",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "author": "Team Pikachu 63",
+  "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev:frontend": "vite",
+    "dev:backend": "tsc && node backend/server.ts",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -16,16 +18,20 @@
     "@mantine/hooks": "^7.7.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jotai": "^2.7.2",
     "mysql": "^2.18.1",
+    "mysql2": "^3.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.22.3",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "sass": "^1.72.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/http-proxy-middleware": "^1.0.0",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -34,8 +40,8 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "sass": "^1.72.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.7"
   }
 }

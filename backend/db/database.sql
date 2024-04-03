@@ -9,7 +9,7 @@ CREATE TABLE users (
   PRIMARY KEY (user_id)
 );
 
-CREATE TABLE job (
+CREATE TABLE jobs (
   job_id INT AUTO_INCREMENT,
   company_name VARCHAR(255),
   job_title VARCHAR(255),
@@ -21,18 +21,18 @@ CREATE TABLE job (
   PRIMARY KEY (job_id)
 );
 
-CREATE TABLE application (
+CREATE TABLE applications (
   app_id INT AUTO_INCREMENT,
   user_id INT,
   job_id INT,
   application_date DATE,
   application_method VARCHAR(255),
   application_status VARCHAR(255),
-  intervview_date DATE,
+  interview_date DATE,
   interview_notes TEXT,
   follow_up_actions TEXT,
   additional_notes TEXT,
   PRIMARY KEY (app_id),
   FOREIGN KEY (user_id) REFERENCES users(user_id),
-  FOREIGN KEY (job_id) REFERENCES job(job_id)
+  FOREIGN KEY (job_id) REFERENCES jobs(job_id)
 );

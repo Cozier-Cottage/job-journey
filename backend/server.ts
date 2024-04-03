@@ -2,7 +2,10 @@ import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { ServerError } from './backend-types';
-import mysql from 'mysql';
+// import mysql from 'mysql';
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const PORT = 3000;
 const app = express();
@@ -13,20 +16,62 @@ app.use(express.json({ limit: '50mb' })); // set file size limit to 50mb
 app.use(express.urlencoded({ extended: true, limit: '50mb' })); // set file size limit to 50mb
 
 const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  waitForConnections: true,
   connectionLimit: 10,
-  host: 'localhost',
-  user: 'your_mysql_username',
-  password: 'your_mysql_password',
-  database: 'your_database_name'
+  queueLimit: 0
 });
 
+// Connect to database
+async function getConnection(): Promise<void> {
+  try {
+    const connection = await pool.getConnection();
+    console.log('Connected to the database with id ' + connection.threadId);
+    connection.release();
+  } catch (err) {
+    console.error('Error getting database connection: ' + err.stack);
+  }
+}
+console.log('HELLO ALEX')
+getConnection();
 
-// app.get('/users', (req, res) => {
-//   pool.query('SELECT * FROM users', (error, results, fields) => {
-//       if (error) throw error;
-//       res.json(results);
-//   });
-// });
+// Test connection to database
+async function testConnection(): Promise<void> {
+  try {
+    const connection = await pool.getConnection();
+    console.log('Connected to the database with id ' + connection.threadId);
+
+    const [rows] = await connection.query('SELECT 1');
+    console.log('Query executed, result:', rows);
+
+    connection.release();
+  } catch (err) {
+    console.error('Error getting database connection: ' + err.stack);
+  }
+}
+
+testConnection();
+
+// Get request to users table
+app.get('/api/users', async (req, res) => {
+  const [rows] = await pool.query('SELECT * FROM users');
+  res.json(rows);
+});
+
+// Get request to jobs table
+app.get('/api/jobs', async (req, res) => {
+  const [rows] = await pool.query('SELECT * FROM jobs');
+  res.json(rows);
+});
+
+// Get request to applications table
+app.get('/api/applications', async (req, res) => {
+  const [rows] = await pool.query('SELECT * FROM applications');
+  res.json(rows);
+});
 
 
 
