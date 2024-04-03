@@ -10,33 +10,43 @@ interface JobModalProps {
   opened: boolean;
   elements: TableContent[]; 
   setElements: (argo0:any) => void;
-  element?: TableContent;
+  objectElement: TableContent;
+  updateIndex: number | null;
+  setUpdateIndex: (any) => void;
 }
 
-export const JobModal = ({ close, form, opened, elements, setElements, element }: JobModalProps): JSX.Element => {
+export const JobModal = ({ close, form, opened, elements, setElements, objectElement, updateIndex, setUpdateIndex }: JobModalProps): JSX.Element => {
   const [date, setDate] = useState<Date | null>(null);
   
   const handleSubmit = (values: TableContent) => {
     const newElements: TableContent[] = [...elements];
     console.log("NEW ELEMENT BEFORE ", newElements);
-    newElements.push(values);
+
+    if (updateIndex === null) newElements.push(values);
+    else {
+      newElements[updateIndex] = values;
+      setUpdateIndex(null);
+    }
     console.log("NEW ELEMENT AFTER ", newElements);
     setElements(newElements);
+    close();
   }
 
   useEffect(() => {
-    if (element) {
-      form.setValues(element);
+    if (objectElement) {
+      form.setValues(objectElement);
     }
-  }, [element, form]);
+  }, [objectElement]);
 
   return (
     <div>
-      <Modal opened={opened} onClose={close}>
+      <Modal opened={opened} onClose={() => {
+        close();
+        form.reset();
+      }}>
         <form onSubmit={form.onSubmit((values: TableContent) => {
           console.log(values);
           handleSubmit(values);
-          close();
         })}>
           {/* Good example. See 'getInputProps'; Can validate input, etc.
           <TextInput
@@ -50,7 +60,6 @@ export const JobModal = ({ close, form, opened, elements, setElements, element }
             withAsterisk
             required={true}
             label="Job Title"
-            value='testing'
             placeholder="e.g. Backend Software Developer, Fullstack Engineer..."
             {...form.getInputProps("jobTitle")}
           />
@@ -92,7 +101,6 @@ export const JobModal = ({ close, form, opened, elements, setElements, element }
             withAsterisk
             required={true}
             label="Job Type"
-            defaultValue="Unknown"
             placeholder="e.g. Onsite, Remote, Hybrid"
             data={[
               "Unknown",
@@ -150,7 +158,7 @@ export const JobModal = ({ close, form, opened, elements, setElements, element }
             {...form.getInputProps("companyContact")}
           />
           {/* INTERVIEW DATE */}
-          <TextInput
+          <DateInput
             required={false}
             label="Interview Date"
             placeholder="MM/DD/YYYY"

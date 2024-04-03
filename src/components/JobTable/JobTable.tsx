@@ -14,21 +14,23 @@ import { JobModal } from "../JobModal/JobModal.tsx";
 
 interface JobTableProps {
   open: () => void;
-  close: () => void; 
-  form: any;
   opened: boolean;
   elements: TableContent[];
   setElements: (argo0:any) => void;
   search: string;
+  updateIndex: number | null;
+  setUpdateIndex: (arg0: number | null) => void;
+  setObjectElement: (arg0: TableContent) => void;
 }
 
 export const JobTable = ({
   open,
-  close,
-  form,
   elements,
   setElements,
   search,
+  updateIndex,
+  setUpdateIndex,
+  setObjectElement
 }: JobTableProps): JSX.Element => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [rows, setRows] = useState<React.JSX.Element[]>([]);
@@ -149,6 +151,8 @@ export const JobTable = ({
                       // Open editing and close current modal
                       setOpenedModals(new Array(elements.length).fill(false));
                       open();
+                      setObjectElement(element);
+                      setUpdateIndex(i);
                     }}
                   >
                     <IconPencil />
@@ -158,7 +162,7 @@ export const JobTable = ({
             }
           >
             {Object.keys(element).map((prop, i) => {
-              console.log(`ELement: ${JSON.stringify(element)}`);
+              // console.log(`ELement: ${JSON.stringify(element)}`);
               return (
                 <Text key={i}>
                   <span
@@ -201,7 +205,7 @@ export const JobTable = ({
     editingIndex,
     colorScheme,
     openedModals,
-    // getStatusColor,
+    updateIndex
   ]);
 
   return (

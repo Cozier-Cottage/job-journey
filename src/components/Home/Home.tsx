@@ -14,6 +14,25 @@ import dummyData from './dummyDatabase.tsx'
 const Home = (): JSX.Element => {
   const [opened, { open, close }] = useDisclosure(false);
   const [search, setSearch] = useState<string>('');
+  const [updateIndex, setUpdateIndex] = useState<number| null> (null);
+  const [elements, setElements] = useState<TableContent[]>(dummyData);
+  const [objectElement, setObjectElement] = useState<TableContent>({
+    jobTitle: "",
+    companyName: "",
+    location: "",
+    appStatus: "",
+    jobType: "",
+    appDate: "",
+    method: "",
+    description: "",
+    url: "",
+    jobSalary: "",
+    companyContact: "",
+    interviewDate: "",
+    interviewNotes: "",
+    followUp: "",
+    addtionalNotes: "",
+  });
   const form = useForm({
     initialValues: {
       jobTitle: "",
@@ -36,7 +55,7 @@ const Home = (): JSX.Element => {
     //   companyContact: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     // },
   });
-  const [elements, setElements] = useState<TableContent[]>(dummyData);
+  
 
   return (
     <Grid className={styles.grid}>
@@ -55,7 +74,8 @@ const Home = (): JSX.Element => {
       </GridCol>
       <GridCol span={9}>
         <div className={styles.jobSection}>
-          <JobModal close={close} form={form} opened={opened} elements={elements} setElements={setElements}/>
+          {/* JOB MODAL */}
+          <JobModal close={close} form={form} opened={opened} elements={elements} setElements={setElements} objectElement={objectElement} updateIndex={updateIndex} setUpdateIndex={setUpdateIndex}/>
           {/* PLUS BUTTON */}
           <div className={styles.plusContainer}>
             <SelectDropdownSearch searchArray={elements.map(el => el.companyName)} search={search} setSearch={setSearch} firstVal={elements[0].companyName}/>
@@ -63,15 +83,15 @@ const Home = (): JSX.Element => {
               onClick={() => {
                 form.reset();
                 open();
+                form.initialize({ appStatus: 'Pending', jobType: 'Unknown' });
               }}
-              // style={{ marginTop: '25px'}}
             >
               <IconOctagonPlus />
             </Button>
           </div>
           
           {/* TABLE */}
-          <JobTable open={open} close={close} form={form} opened={opened} elements={elements} setElements={setElements} search={search} />
+          <JobTable open={open} opened={opened} elements={elements} setElements={setElements} search={search} setUpdateIndex={setUpdateIndex} setObjectElement={setObjectElement}/>
         </div>
       </GridCol>
     </Grid>
