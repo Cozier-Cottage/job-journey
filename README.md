@@ -34,26 +34,6 @@ Provide instructions on how to install and set up your project. Include any depe
 
 Please ensure that your contributions adhere to our coding standards and guidelines.
 
-## Usage
-
-
-
-## Contributing
-
-Thank you for considering contributing to our project! We welcome contributions from the community. To get started, please follow these steps:
-
-1. Fork the repository and create your branch.
-
-2. Make your changes and test thoroughly.
-
-3. Commit your changes with a descriptive commit message.
-
-4. Push your changes to your forked repository.
-
-5. Open a pull request in the main repository, describing your changes and the motivation behind them.
-
-Please ensure that your contributions adhere to our coding standards and guidelines.
-
 ### Contributors
 
 - [Andy White](https://github.com/ComfyClicks)
