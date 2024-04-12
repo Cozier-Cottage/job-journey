@@ -1,0 +1,27 @@
+.grid {
+    position: relative;
+    height: 100%;
+    margin-left: 50px;
+    margin-top: 70px;
+}
+
+.jobSection {
+    padding: 20px;
+}
+
+  
+.grid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 25%; /* Adjust this value based on your column width */
+    width: 1px;
+    background-color: #ccc; /* Adjust the color as needed */
+}
+
+.plusContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}

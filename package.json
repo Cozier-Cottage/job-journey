@@ -11,8 +11,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/core": "^7.7.1",
+    "@mantine/dates": "^7.7.1",
+    "@mantine/form": "^7.7.1",
+    "@mantine/hooks": "^7.7.1",
+    "@nivo/core": "^0.85.1",
+    "@nivo/sankey": "^0.85.1",
+    "@tabler/icons-react": "^3.1.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
+    "d3": "^7.9.0",
+    "d3-sankey": "^0.12.3",
+    "dayjs": "^1.11.10",
     "express": "^4.19.2",
     "jotai": "^2.7.2",
     "react": "^18.2.0",
@@ -21,8 +31,10 @@
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/d3-sankey": "^0.12.4",
     "@types/express": "^4.17.21",
-    "@types/react": "^18.2.66",
+    "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
